@@ -60,13 +60,15 @@ void dropFood() {
 
 void draw() {
   background (0,0,0);
+    drawSnake();
   drawFood();
-   drawSnake();
+    eat();
+ text("Score: " + foodEaten, 20,20);
   checkBoundaries();
   move();
  
-  eat();
-  manageTail();
+
+
 }
 
 void drawFood() {
@@ -79,7 +81,7 @@ void drawFood() {
 void drawSnake() {
     fill(0,255,0);
   rect(head.x, head.y, 10, 10);
-
+manageTail();
   //Draw the head of the snake followed by its tail
 }
 
@@ -110,7 +112,7 @@ void checkTailCollision() {
   //If the snake crosses its own tail, shrink the tail back to one segment
   for(Segment s: tail){
     
-  if(head.x==s.x || head.y==s.y){
+  if(head.x==s.x && head.y==s.y){
     foodEaten = 0;
     tail = new ArrayList<Segment>();
      tail.add(new Segment(head.x, head.y));
@@ -207,10 +209,13 @@ void checkBoundaries() {
 void eat() {
   //When the snake eats the food, its tail should grow and more food appear
 if(foodX==head.x && foodY==head.y){
-  foodEaten= foodEaten+1;
+     dropFood(); 
+  foodEaten ++;
+
   tail.add(new Segment(head.x,head.y));
- dropFood(); 
+  
  print("eat");
+ fill(255,255,255);
 
 }
 }
